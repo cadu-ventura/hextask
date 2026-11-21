@@ -1,4 +1,3 @@
-// Pegando os elementos do HTML
 var campo = document.getElementById("campo");
 var categoria = document.getElementById("categoria");
 var prioridade = document.getElementById("prioridade");
@@ -10,7 +9,6 @@ var concluidas = document.getElementById("concluidas");
 var colunas = document.querySelectorAll(".lista");
 var filtros = document.querySelectorAll(".filtro");
 
-// Nome que aparece na etiqueta de cada categoria
 var nomesCategorias = {
   casa: "Casa",
   trabalho: "Trabalho",
@@ -20,7 +18,6 @@ var nomesCategorias = {
   outros: "Outros"
 };
 
-// Nome de cada prioridade e o "peso" usado para ordenar (menor = mais importante)
 var nomesPrioridades = {
   alta: "Alta",
   media: "Média",
@@ -33,13 +30,10 @@ var pesos = {
   baixa: 3
 };
 
-// Guarda a tarefa que está sendo arrastada
 var arrastando = null;
 
-// Categoria escolhida no painel ("todas" mostra tudo)
 var filtroAtual = "todas";
 
-// Mostra "Bom dia/Boa tarde/Boa noite", a data e o horário do computador
 function mostrarSaudacao() {
   var agora = new Date();
   var hora = agora.getHours();
@@ -56,14 +50,11 @@ function mostrarSaudacao() {
   document.getElementById("saudacao").innerText = saudacao + "! Hoje é " + data + " · " + horario;
 }
 
-// Atualiza os contadores das colunas, o progresso e as categorias do painel
 function atualizarResumo() {
-  // Contadores de cada coluna
   document.getElementById("total-pendentes").innerText = pendentes.children.length;
   document.getElementById("total-fazendo").innerText = fazendo.children.length;
   document.getElementById("total-concluidas").innerText = concluidas.children.length;
 
-  // Progresso: quantas foram feitas do total
   var total = pendentes.children.length + fazendo.children.length + concluidas.children.length;
   var feitas = concluidas.children.length;
   var porcentagem = 0;
@@ -74,7 +65,7 @@ function atualizarResumo() {
 
   document.getElementById("porcentagem").innerText = porcentagem;
   document.getElementById("barra-cheia").style.width = porcentagem + "%";
-  document.getElementById("barra").setAttribute("aria-valuenow", porcentagem); // valor pro leitor de tela
+  document.getElementById("barra").setAttribute("aria-valuenow", porcentagem);
 
   var texto = document.getElementById("texto-progresso");
 
@@ -86,7 +77,6 @@ function atualizarResumo() {
     texto.innerText = feitas + " de " + total + " tarefas concluídas";
   }
 
-  // Quantas tarefas existem em cada categoria
   var itens = document.querySelectorAll("li");
   document.getElementById("qtd-todas").innerText = itens.length;
 
@@ -103,7 +93,6 @@ function atualizarResumo() {
   }
 }
 
-// Esconde as tarefas que não são da categoria escolhida no painel
 function aplicarFiltro() {
   var itens = document.querySelectorAll("li");
 
@@ -116,7 +105,6 @@ function aplicarFiltro() {
   }
 }
 
-// Salva todas as tarefas no navegador (localStorage)
 function salvar() {
   var tarefas = [];
   var itens = document.querySelectorAll("li");
@@ -126,16 +114,14 @@ function salvar() {
       texto: itens[i].dataset.texto,
       categoria: itens[i].dataset.categoria,
       prioridade: itens[i].dataset.prioridade,
-      coluna: itens[i].parentElement.id // "pendentes", "fazendo" ou "concluidas"
+      coluna: itens[i].parentElement.id
     });
   }
 
   localStorage.setItem("hextask", JSON.stringify(tarefas));
 }
 
-// Coloca a tarefa em uma coluna, já na posição certa pela prioridade
 function moverPara(item, coluna) {
-  // Procura a primeira tarefa da coluna que seja MENOS importante que esta
   var antesDe = null;
 
   for (var i = 0; i < coluna.children.length; i++) {
@@ -147,10 +133,7 @@ function moverPara(item, coluna) {
     }
   }
 
-  // Coloca antes dela (se não achou nenhuma, antesDe é null e vai para o fim)
   coluna.insertBefore(item, antesDe);
-
-  // Risca se for "Feito"
 
   if (coluna == concluidas) {
     item.classList.add("feita");
@@ -162,9 +145,7 @@ function moverPara(item, coluna) {
   salvar();
 }
 
-// Cria o item da lista com etiquetas, arrastar, clicar, editar e excluir
 function criarTarefa(texto, cat, nomeColuna, prio) {
-  // Tarefas salvas antes de existir prioridade ficam como "média"
   if (!prio) {
     prio = "media";
   }
@@ -175,14 +156,13 @@ function criarTarefa(texto, cat, nomeColuna, prio) {
   item.dataset.categoria = cat;
   item.dataset.prioridade = prio;
 
-  // Círculo da esquerda: marca como feita (ou desmarca)
   var marcar = document.createElement("button");
   marcar.className = "marcar";
   marcar.title = "Marcar como concluída";
   marcar.setAttribute("aria-label", "Marcar como concluída");
 
   marcar.onclick = function (evento) {
-    evento.stopPropagation(); // não deixa o clique do cartão rodar junto
+    evento.stopPropagation();
     if (item.parentElement == concluidas) {
       moverPara(item, pendentes);
     } else {
@@ -192,7 +172,6 @@ function criarTarefa(texto, cat, nomeColuna, prio) {
 
   item.appendChild(marcar);
 
-  // Meio do cartão: etiquetas em cima e o texto embaixo
   var corpo = document.createElement("div");
   corpo.className = "corpo";
 
@@ -204,7 +183,6 @@ function criarTarefa(texto, cat, nomeColuna, prio) {
   etiqueta.className = "etiqueta " + cat;
   etiquetas.appendChild(etiqueta);
 
-  // Prioridade com o nome escrito (não só a cor)
   var nivel = document.createElement("span");
   nivel.innerText = nomesPrioridades[prio];
   nivel.className = "nivel " + prio;
@@ -220,32 +198,28 @@ function criarTarefa(texto, cat, nomeColuna, prio) {
 
   item.appendChild(corpo);
 
-  // Enquanto edita, clicar no texto não pode mover o cartão de coluna
   textoTarefa.onclick = function (evento) {
     if (textoTarefa.isContentEditable) {
       evento.stopPropagation();
     }
   };
 
-  // Enter salva e Esc cancela a edição
   textoTarefa.onkeydown = function (evento) {
     if (evento.key == "Enter") {
-      evento.preventDefault(); // não deixa pular linha
+      evento.preventDefault();
       textoTarefa.blur();
     } else if (evento.key == "Escape") {
-      textoTarefa.innerText = item.dataset.texto; // volta o texto antigo
+      textoTarefa.innerText = item.dataset.texto;
       textoTarefa.blur();
     }
   };
 
-  // Quando sai do texto (Enter, Esc ou clicando fora), termina a edição
   textoTarefa.onblur = function () {
     textoTarefa.contentEditable = "false";
     item.draggable = true;
 
     var novoTexto = textoTarefa.innerText.trim();
 
-    // Se apagou tudo, volta o texto antigo
     if (novoTexto == "") {
       textoTarefa.innerText = item.dataset.texto;
     } else {
@@ -255,7 +229,6 @@ function criarTarefa(texto, cat, nomeColuna, prio) {
     }
   };
 
-  // Botão de editar (lápis)
   var editar = document.createElement("button");
   editar.innerText = "✎";
   editar.className = "editar";
@@ -263,30 +236,26 @@ function criarTarefa(texto, cat, nomeColuna, prio) {
   editar.setAttribute("aria-label", "Editar tarefa");
 
   editar.onclick = function (evento) {
-    evento.stopPropagation(); // não deixa o clique trocar a tarefa de coluna
-    item.draggable = false; // pra conseguir selecionar o texto com o mouse
+    evento.stopPropagation();
+    item.draggable = false;
     textoTarefa.contentEditable = "true";
     textoTarefa.focus();
 
-    // Seleciona o texto todo, pronto pra digitar por cima
     var selecao = window.getSelection();
     selecao.selectAllChildren(textoTarefa);
   };
 
   item.appendChild(editar);
 
-  // Começou a arrastar
   item.ondragstart = function () {
     arrastando = item;
     item.classList.add("arrastando");
   };
 
-  // Terminou de arrastar
   item.ondragend = function () {
     item.classList.remove("arrastando");
   };
 
-  // Clicar na tarefa avança: A fazer → Fazendo → Feito → A fazer
   item.onclick = function () {
     if (item.parentElement == pendentes) {
       moverPara(item, fazendo);
@@ -297,32 +266,28 @@ function criarTarefa(texto, cat, nomeColuna, prio) {
     }
   };
 
-  // Com o teclado: Tab chega no cartão e Enter (ou espaço) avança de coluna
   item.tabIndex = 0;
 
   item.onkeydown = function (evento) {
-    // Só quando o foco está no próprio cartão (não no texto sendo editado nem nos botões)
     if (evento.target != item) {
       return;
     }
 
     if (evento.key == "Enter" || evento.key == " ") {
-      evento.preventDefault(); // o espaço não pode rolar a página
+      evento.preventDefault();
       item.onclick();
-      item.focus(); // o foco continua no cartão depois de mudar de coluna
+      item.focus();
     }
   };
 
-  // Cria o botão de excluir
   var excluir = document.createElement("button");
   excluir.innerText = "X";
   excluir.className = "excluir";
   excluir.title = "Excluir tarefa";
   excluir.setAttribute("aria-label", "Excluir tarefa");
 
-  // Clicar no X apaga a tarefa
   excluir.onclick = function (evento) {
-    evento.stopPropagation(); // não deixa o clique trocar a tarefa de coluna
+    evento.stopPropagation();
     item.remove();
     atualizarResumo();
     salvar();
@@ -330,26 +295,21 @@ function criarTarefa(texto, cat, nomeColuna, prio) {
 
   item.appendChild(excluir);
 
-  // Coloca na coluna certa (se não vier nenhuma, vai para "A fazer")
   var coluna = document.getElementById(nomeColuna) || pendentes;
   moverPara(item, coluna);
   aplicarFiltro();
 }
 
-// Faz cada coluna aceitar tarefas arrastadas
 for (var i = 0; i < colunas.length; i++) {
-  // Enquanto arrasta por cima da coluna
   colunas[i].ondragover = function (evento) {
-    evento.preventDefault(); // sem isso o navegador não deixa soltar
+    evento.preventDefault();
     this.classList.add("destaque");
   };
 
-  // Quando sai de cima da coluna
   colunas[i].ondragleave = function () {
     this.classList.remove("destaque");
   };
 
-  // Quando solta a tarefa na coluna
   colunas[i].ondrop = function (evento) {
     evento.preventDefault();
     this.classList.remove("destaque");
@@ -357,11 +317,8 @@ for (var i = 0; i < colunas.length; i++) {
   };
 }
 
-// Clicar numa categoria do painel filtra as tarefas
 for (var f = 0; f < filtros.length; f++) {
   filtros[f].onclick = function () {
-    // Tira o destaque de todos os botões e coloca só no clicado
-    // (o aria-pressed avisa o leitor de tela qual botão está ligado)
     for (var k = 0; k < filtros.length; k++) {
       filtros[k].classList.remove("ativo");
       filtros[k].setAttribute("aria-pressed", "false");
@@ -374,11 +331,9 @@ for (var f = 0; f < filtros.length; f++) {
   };
 }
 
-// Adiciona a tarefa digitada
 function adicionar() {
   var texto = campo.value.trim();
 
-  // Se o campo estiver vazio, não faz nada
   if (texto == "") {
     alert("Digite uma tarefa!");
     return;
@@ -386,12 +341,10 @@ function adicionar() {
 
   criarTarefa(texto, categoria.value, "pendentes", prioridade.value);
 
-  // Limpa o campo e deixa pronto pra digitar a próxima
   campo.value = "";
   campo.focus();
 }
 
-// Adiciona clicando no botão ou apertando Enter
 botao.onclick = adicionar;
 
 campo.onkeydown = function (evento) {
@@ -400,18 +353,15 @@ campo.onkeydown = function (evento) {
   }
 };
 
-// Apaga de uma vez todas as tarefas já feitas
 limpar.onclick = function () {
   concluidas.innerHTML = "";
   atualizarResumo();
   salvar();
 };
 
-// Liga ou desliga o tema escuro e guarda a escolha
 var tema = document.getElementById("tema");
 
 function aplicarTema(nome) {
-  // O botão mostra só o ícone; o title e o aria-label dizem o que ele faz
   if (nome == "escuro") {
     document.body.classList.add("escuro");
     tema.innerText = "☀";
@@ -424,7 +374,6 @@ function aplicarTema(nome) {
 
   tema.setAttribute("aria-label", tema.title);
 
-  // Com o app instalado, a barra de cima do celular acompanha o tema
   var corBarra = document.querySelector('meta[name="theme-color"]');
   if (nome == "escuro") {
     corBarra.setAttribute("content", "#171A21");
@@ -435,7 +384,6 @@ function aplicarTema(nome) {
   localStorage.setItem("hextask-tema", nome);
 }
 
-// Clicar no botão troca para o outro tema
 tema.onclick = function () {
   if (document.body.classList.contains("escuro")) {
     aplicarTema("claro");
@@ -444,11 +392,9 @@ tema.onclick = function () {
   }
 };
 
-// Quando a página abre: aplica o tema salvo, mostra a saudação e carrega as tarefas
 aplicarTema(localStorage.getItem("hextask-tema") || "claro");
 mostrarSaudacao();
 
-// A cada 1 segundo (1000 milissegundos) atualiza a saudação e o horário
 setInterval(mostrarSaudacao, 1000);
 
 var salvas = JSON.parse(localStorage.getItem("hextask")) || [];

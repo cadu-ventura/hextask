@@ -6,11 +6,9 @@
   <title>HexTask</title>
   <link rel="icon" href="assets/img/logo.png">
 
-  <!-- Instalar como app (PWA): nome, ícones e cores ficam no manifest.json -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#FFFFFF">
 
-  <!-- iPhone: ícone da tela inicial e abrir em tela cheia -->
   <link rel="apple-touch-icon" href="assets/img/icone-apple.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
@@ -33,7 +31,6 @@
     </header>
 
     <main>
-      <!-- Formulário para criar uma tarefa (os labels ficam escondidos na tela, mas o leitor de tela lê) -->
       <section class="formulario" aria-label="Nova tarefa">
         <label for="campo" class="so-leitor">Tarefa</label>
         <input type="text" id="campo" placeholder="O que você precisa fazer hoje?">
@@ -60,14 +57,12 @@
 
       <div class="conteudo">
 
-        <!-- Painel com o resumo do dia -->
         <aside class="resumo" aria-label="Resumo do dia">
           <h2 class="titulo-painel">Progresso do dia</h2>
           <p class="porcentagem"><span id="porcentagem">0</span>%</p>
           <div id="barra" class="barra" role="progressbar" aria-label="Progresso do dia" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
             <div id="barra-cheia" class="barra-cheia"></div>
           </div>
-          <!-- aria-live: o leitor de tela avisa quando esse texto muda -->
           <p id="texto-progresso" class="texto-progresso" aria-live="polite">Nenhuma tarefa ainda</p>
 
           <h2 class="titulo-painel">Categorias</h2>
@@ -96,7 +91,6 @@
           </div>
         </aside>
 
-        <!-- Quadro com as 3 colunas -->
         <div class="quadro">
           <section class="coluna" aria-labelledby="titulo-pendentes">
             <h2 id="titulo-pendentes">A fazer <span id="total-pendentes">0</span></h2>

@@ -1,4 +1,3 @@
-/* ===== Cores do tema CLARO (padrão) ===== */
 :root {
   color-scheme: light;
   --fundo: #F4F5F7;
@@ -8,7 +7,7 @@
   --linha: #E5E7EB;
   --texto: #111827;
   --texto-suave: #4B5563;
-  --texto-apagado: #636B78; /* cinzas mais escuros pra ter contraste suficiente */
+  --texto-apagado: #636B78;
   --destaque: #2563EB;
   --destaque-hover: #1D4ED8;
   --destaque-fundo: #EFF6FF;
@@ -16,7 +15,6 @@
   --sombra-forte: 0 10px 30px rgba(17, 24, 39, 0.08);
 }
 
-/* ===== Cores do tema ESCURO ===== */
 body.escuro {
   color-scheme: dark;
   --fundo: #0F1115;
@@ -26,7 +24,7 @@ body.escuro {
   --linha: #2E343E;
   --texto: #F3F4F6;
   --texto-suave: #C4C9D1;
-  --texto-apagado: #9CA3AF; /* cinzas mais claros pra ter contraste no fundo escuro */
+  --texto-apagado: #9CA3AF;
   --destaque: #3B82F6;
   --destaque-hover: #60A5FA;
   --destaque-fundo: rgba(59, 130, 246, 0.12);
@@ -42,21 +40,18 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* A página ocupa a tela inteira, como no Trello */
 .caixa {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* O conteúdo principal ocupa o espaço entre o cabeçalho e o rodapé */
 main {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-/* Esconde da tela, mas o leitor de tela continua lendo (usado nos labels) */
 .so-leitor {
   position: absolute;
   width: 1px;
@@ -69,14 +64,12 @@ main {
   border: 0;
 }
 
-/* Contorno bem visível em quem está selecionado pelo teclado (Tab) */
 button:focus-visible,
 li:focus-visible {
   outline: 3px solid var(--destaque);
   outline-offset: 2px;
 }
 
-/* Cabeçalho: barra de ponta a ponta no topo */
 .topo {
   display: flex;
   align-items: center;
@@ -102,7 +95,6 @@ h1 {
   color: var(--texto-suave);
 }
 
-/* Botão de trocar o tema */
 #tema {
   margin-left: auto;
   width: 38px;
@@ -124,7 +116,6 @@ h1 {
   background-color: var(--coluna);
 }
 
-/* Formulário */
 .formulario {
   display: flex;
   flex-wrap: wrap;
@@ -179,8 +170,6 @@ h1 {
   background-color: var(--destaque-hover);
 }
 
-/* Painel de resumo à esquerda + quadro à direita */
-/* Ocupa todo o espaço que sobra até o fim da tela */
 .conteudo {
   flex: 1;
   display: flex;
@@ -188,7 +177,6 @@ h1 {
   padding: 20px 28px;
 }
 
-/* Painel com o resumo do dia */
 .resumo {
   align-self: flex-start;
   width: 240px;
@@ -199,7 +187,6 @@ h1 {
   border-radius: 12px;
 }
 
-/* Títulos do painel (Progresso do dia, Categorias) */
 .titulo-painel {
   margin: 0 0 10px;
   font-size: 12px;
@@ -215,7 +202,6 @@ h1 {
   font-weight: 700;
 }
 
-/* Barra de progresso: o fundo cinza e a parte azul que vai enchendo */
 .barra {
   height: 8px;
   margin-top: 8px;
@@ -238,7 +224,6 @@ h1 {
   color: var(--texto-suave);
 }
 
-/* Botões de filtro por categoria */
 .filtros {
   display: flex;
   flex-direction: column;
@@ -276,7 +261,6 @@ h1 {
   color: var(--texto-apagado);
 }
 
-/* Bolinha colorida de cada categoria */
 .bolinha {
   width: 10px;
   height: 10px;
@@ -291,7 +275,6 @@ h1 {
 .bolinha.saude    { background-color: #EF4444; }
 .bolinha.outros   { background-color: #6B7280; }
 
-/* Quadro com as colunas */
 .quadro {
   flex: 1;
   display: flex;
@@ -299,7 +282,6 @@ h1 {
   min-width: 0;
 }
 
-/* Cada coluna vai até embaixo da tela */
 .coluna {
   flex: 1;
   display: flex;
@@ -319,7 +301,6 @@ h2 {
   color: var(--texto-suave);
 }
 
-/* Contador ao lado do nome da coluna */
 h2 span {
   padding: 1px 8px;
   font-size: 12px;
@@ -328,7 +309,6 @@ h2 span {
   border-radius: 999px;
 }
 
-/* A lista estica e ocupa a coluna toda, então dá pra soltar tarefa em qualquer lugar dela */
 .lista {
   flex: 1;
   min-height: 150px;
@@ -344,9 +324,7 @@ h2 span {
   background-color: var(--destaque-fundo);
 }
 
-/* Cada tarefa */
 li {
-  /* Círculo, conteúdo e X lado a lado, presos no topo quando o texto é grande */
   display: flex;
   align-items: flex-start;
   gap: 10px;
@@ -363,12 +341,10 @@ li {
   animation: aparecer 0.25s ease-out;
 }
 
-/* Tarefas escondidas pelo filtro (o display: flex acima não pode ganhar do hidden) */
 li[hidden] {
   display: none;
 }
 
-/* Meio do cartão: etiqueta em cima, texto embaixo, ocupando o espaço que sobra */
 .corpo {
   flex: 1;
   min-width: 0;
@@ -378,13 +354,11 @@ li[hidden] {
   gap: 6px;
 }
 
-/* O texto quebra linha se for grande */
 .texto {
   line-height: 1.4;
   overflow-wrap: anywhere;
 }
 
-/* Círculo para marcar como feita */
 .marcar {
   flex-shrink: 0;
   display: flex;
@@ -408,7 +382,6 @@ li[hidden] {
   border-color: var(--destaque);
 }
 
-/* Quando a tarefa está feita, o círculo fica preenchido com um ✓ */
 .feita .marcar {
   background-color: var(--destaque);
   border-color: var(--destaque);
@@ -423,7 +396,6 @@ li:hover {
   box-shadow: var(--sombra-forte);
 }
 
-/* Animação quando a tarefa entra na lista */
 @keyframes aparecer {
   from {
     opacity: 0;
@@ -439,18 +411,15 @@ li:hover {
   opacity: 0.4;
 }
 
-/* Tarefas em andamento ganham uma faixa azul do lado */
 #fazendo li {
   border-left: 3px solid var(--destaque);
 }
 
-/* Só o texto fica riscado (a etiqueta e os botões não) */
 .feita .texto {
   text-decoration: line-through;
   color: var(--texto-apagado);
 }
 
-/* Etiqueta com a categoria da tarefa */
 .etiqueta {
   flex-shrink: 0;
   padding: 2px 8px;
@@ -466,7 +435,6 @@ li:hover {
 .saude    { color: #B91C1C; background-color: rgba(239, 68, 68, 0.15); }
 .outros   { color: #4B5563; background-color: rgba(107, 114, 128, 0.15); }
 
-/* No escuro as letras das etiquetas ficam mais claras */
 body.escuro .casa     { color: #FBBF24; }
 body.escuro .trabalho { color: #60A5FA; }
 body.escuro .estudos  { color: #C084FC; }
@@ -474,7 +442,6 @@ body.escuro .mercado  { color: #4ADE80; }
 body.escuro .saude    { color: #F87171; }
 body.escuro .outros   { color: #D1D5DB; }
 
-/* Linha com a etiqueta da categoria e a prioridade lado a lado */
 .etiquetas {
   display: flex;
   flex-wrap: wrap;
@@ -482,7 +449,6 @@ body.escuro .outros   { color: #D1D5DB; }
   gap: 8px;
 }
 
-/* Prioridade: bolinha colorida + nome escrito */
 .nivel {
   display: inline-flex;
   align-items: center;
@@ -496,7 +462,7 @@ body.escuro .outros   { color: #D1D5DB; }
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: currentColor; /* a bolinha usa a mesma cor do texto */
+  background-color: currentColor;
 }
 
 .nivel.alta  { color: #DC2626; }
@@ -520,7 +486,6 @@ body.escuro .nivel.baixa { color: #4ADE80; }
   transition: all 0.2s;
 }
 
-/* Lápis de editar: mesmo jeito do X, mas fica azul no hover */
 .editar {
   flex-shrink: 0;
   width: 24px;
@@ -540,7 +505,6 @@ body.escuro .nivel.baixa { color: #4ADE80; }
   background-color: var(--destaque-fundo);
 }
 
-/* Texto enquanto está sendo editado */
 .texto[contenteditable="true"] {
   align-self: stretch;
   padding: 2px 4px;
@@ -585,7 +549,6 @@ body.escuro .nivel.baixa { color: #4ADE80; }
   text-align: center;
 }
 
-/* Telas médias (notebook pequeno, tablet): o painel vai para cima do quadro */
 @media (max-width: 900px) {
   .conteudo {
     flex-direction: column;
@@ -603,9 +566,7 @@ body.escuro .nivel.baixa { color: #4ADE80; }
   }
 }
 
-/* Celular */
 @media (max-width: 600px) {
-  /* Menos espaço nas laterais */
   .topo,
   .conteudo {
     padding-left: 16px;
@@ -616,7 +577,6 @@ body.escuro .nivel.baixa { color: #4ADE80; }
     padding: 0 16px 16px;
   }
 
-  /* Cabeçalho: logo, título e botão continuam na mesma linha */
   .topo {
     gap: 10px;
   }
@@ -629,7 +589,6 @@ body.escuro .nivel.baixa { color: #4ADE80; }
     font-size: 20px;
   }
 
-  /* O bloco do título encolhe e a saudação quebra linha se precisar */
   .topo > div {
     flex: 1;
     min-width: 0;
@@ -643,8 +602,6 @@ body.escuro .nivel.baixa { color: #4ADE80; }
     flex-shrink: 0;
   }
 
-  /* Formulário em grade: campo inteiro em cima, os dois seletores lado a lado
-     e o botão inteiro embaixo */
   .formulario {
     display: grid;
     grid-template-columns: 1fr 1fr;

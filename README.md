@@ -71,6 +71,7 @@ assets/img/       → logo e ícones do app
 17. Ajusta layout no celular
 18. Renomeia o repositório para hextask
 19. Instalar como app (PWA)
+20. Limpeza do código
 
 ## Autores
 
