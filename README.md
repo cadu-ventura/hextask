@@ -8,6 +8,7 @@ A ideia é ter um quadro simples para anotar o que precisa ser feito (em casa, n
 
 - Adicionar tarefas pelo botão ou apertando **Enter**
 - Escolher uma **categoria** para cada tarefa (Casa, Trabalho, Estudos, Mercado, Saúde, Outros), com etiqueta colorida
+- Definir a **prioridade** (alta, média ou baixa); as mais importantes ficam sempre no topo de cada coluna
 - Quadro com 3 colunas: **A fazer**, **Fazendo** e **Feito**
 - Clicar na tarefa para avançar de coluna, ou arrastar e soltar onde quiser
 - Marcar como concluída direto pelo **círculo** do cartão
@@ -51,6 +52,7 @@ assets/img/       → logo
 11. Coluna "Fazendo" e painel de resumo
 12. Concluir pelo círculo e editar tarefas
 13. Atualiza README
+14. Prioridades e ordenação
 
 ## Autores
 

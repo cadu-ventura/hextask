@@ -1,6 +1,7 @@
 // Pegando os elementos do HTML
 var campo = document.getElementById("campo");
 var categoria = document.getElementById("categoria");
+var prioridade = document.getElementById("prioridade");
 var botao = document.getElementById("botao");
 var limpar = document.getElementById("limpar");
 var pendentes = document.getElementById("pendentes");
@@ -17,6 +18,19 @@ var nomesCategorias = {
   mercado: "Mercado",
   saude: "Saúde",
   outros: "Outros"
+};
+
+// Nome de cada prioridade e o "peso" usado para ordenar (menor = mais importante)
+var nomesPrioridades = {
+  alta: "Alta",
+  media: "Média",
+  baixa: "Baixa"
+};
+
+var pesos = {
+  alta: 1,
+  media: 2,
+  baixa: 3
 };
 
 // Guarda a tarefa que está sendo arrastada
@@ -110,6 +124,7 @@ function salvar() {
     tarefas.push({
       texto: itens[i].dataset.texto,
       categoria: itens[i].dataset.categoria,
+      prioridade: itens[i].dataset.prioridade,
       coluna: itens[i].parentElement.id // "pendentes", "fazendo" ou "concluidas"
     });
   }
@@ -117,9 +132,24 @@ function salvar() {
   localStorage.setItem("hextask", JSON.stringify(tarefas));
 }
 
-// Coloca a tarefa em uma coluna e risca se for "Feito"
+// Coloca a tarefa em uma coluna, já na posição certa pela prioridade
 function moverPara(item, coluna) {
-  coluna.appendChild(item);
+  // Procura a primeira tarefa da coluna que seja MENOS importante que esta
+  var antesDe = null;
+
+  for (var i = 0; i < coluna.children.length; i++) {
+    var outra = coluna.children[i];
+
+    if (outra != item && pesos[outra.dataset.prioridade] > pesos[item.dataset.prioridade]) {
+      antesDe = outra;
+      break;
+    }
+  }
+
+  // Coloca antes dela (se não achou nenhuma, antesDe é null e vai para o fim)
+  coluna.insertBefore(item, antesDe);
+
+  // Risca se for "Feito"
 
   if (coluna == concluidas) {
     item.classList.add("feita");
@@ -131,12 +161,18 @@ function moverPara(item, coluna) {
   salvar();
 }
 
-// Cria o item da lista com etiqueta, arrastar, clicar e excluir
-function criarTarefa(texto, cat, nomeColuna) {
+// Cria o item da lista com etiquetas, arrastar, clicar, editar e excluir
+function criarTarefa(texto, cat, nomeColuna, prio) {
+  // Tarefas salvas antes de existir prioridade ficam como "média"
+  if (!prio) {
+    prio = "media";
+  }
+
   var item = document.createElement("li");
   item.draggable = true;
   item.dataset.texto = texto;
   item.dataset.categoria = cat;
+  item.dataset.prioridade = prio;
 
   // Círculo da esquerda: marca como feita (ou desmarca)
   var marcar = document.createElement("button");
@@ -155,14 +191,26 @@ function criarTarefa(texto, cat, nomeColuna) {
 
   item.appendChild(marcar);
 
-  // Meio do cartão: etiqueta em cima e o texto embaixo
+  // Meio do cartão: etiquetas em cima e o texto embaixo
   var corpo = document.createElement("div");
   corpo.className = "corpo";
+
+  var etiquetas = document.createElement("div");
+  etiquetas.className = "etiquetas";
 
   var etiqueta = document.createElement("span");
   etiqueta.innerText = nomesCategorias[cat];
   etiqueta.className = "etiqueta " + cat;
-  corpo.appendChild(etiqueta);
+  etiquetas.appendChild(etiqueta);
+
+  // Prioridade com o nome escrito (não só a cor)
+  var nivel = document.createElement("span");
+  nivel.innerText = nomesPrioridades[prio];
+  nivel.className = "nivel " + prio;
+  nivel.title = "Prioridade " + nomesPrioridades[prio].toLowerCase();
+  etiquetas.appendChild(nivel);
+
+  corpo.appendChild(etiquetas);
 
   var textoTarefa = document.createElement("span");
   textoTarefa.innerText = texto;
@@ -314,7 +362,7 @@ function adicionar() {
     return;
   }
 
-  criarTarefa(texto, categoria.value, "pendentes");
+  criarTarefa(texto, categoria.value, "pendentes", prioridade.value);
 
   // Limpa o campo e deixa pronto pra digitar a próxima
   campo.value = "";
@@ -376,7 +424,7 @@ setInterval(mostrarSaudacao, 1000);
 var salvas = JSON.parse(localStorage.getItem("hextask")) || [];
 
 for (var j = 0; j < salvas.length; j++) {
-  criarTarefa(salvas[j].texto, salvas[j].categoria, salvas[j].coluna);
+  criarTarefa(salvas[j].texto, salvas[j].categoria, salvas[j].coluna, salvas[j].prioridade);
 }
 
 atualizarResumo();

@@ -106,6 +106,7 @@ h1 {
 }
 
 #campo,
+#prioridade,
 #categoria {
   padding: 11px 14px;
   font-family: inherit;
@@ -127,7 +128,8 @@ h1 {
 }
 
 #campo:focus,
-#categoria:focus {
+#categoria:focus,
+#prioridade:focus {
   outline: none;
   border-color: var(--destaque);
   box-shadow: 0 0 0 3px var(--destaque-fundo);
@@ -443,6 +445,39 @@ body.escuro .estudos  { color: #C084FC; }
 body.escuro .mercado  { color: #4ADE80; }
 body.escuro .saude    { color: #F87171; }
 body.escuro .outros   { color: #D1D5DB; }
+
+/* Linha com a etiqueta da categoria e a prioridade lado a lado */
+.etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Prioridade: bolinha colorida + nome escrito */
+.nivel {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.nivel::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: currentColor; /* a bolinha usa a mesma cor do texto */
+}
+
+.nivel.alta  { color: #DC2626; }
+.nivel.media { color: #B45309; }
+.nivel.baixa { color: #15803D; }
+
+body.escuro .nivel.alta  { color: #F87171; }
+body.escuro .nivel.media { color: #FBBF24; }
+body.escuro .nivel.baixa { color: #4ADE80; }
 
 .excluir {
   flex-shrink: 0;
