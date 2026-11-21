@@ -20,10 +20,43 @@ var nomesCategorias = {
 // Guarda a tarefa que está sendo arrastada
 var arrastando = null;
 
+// Mostra "Bom dia/Boa tarde/Boa noite", a data e o horário do computador
+function mostrarSaudacao() {
+  var agora = new Date();
+  var hora = agora.getHours();
+  var saudacao = "Boa noite";
+
+  if (hora >= 5 && hora < 12) {
+    saudacao = "Bom dia";
+  } else if (hora >= 12 && hora < 18) {
+    saudacao = "Boa tarde";
+  }
+
+  var data = agora.toLocaleDateString("pt-BR", { weekday: "long", day: "numeric", month: "long" });
+  var horario = agora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+  document.getElementById("saudacao").innerText = saudacao + "! Hoje é " + data + " · " + horario;
+}
+
 // Atualiza o número ao lado do nome de cada coluna
 function atualizarContadores() {
   document.getElementById("total-pendentes").innerText = pendentes.children.length;
   document.getElementById("total-concluidas").innerText = concluidas.children.length;
+}
+
+// Salva todas as tarefas no navegador (localStorage)
+function salvar() {
+  var tarefas = [];
+  var itens = document.querySelectorAll("li");
+
+  for (var i = 0; i < itens.length; i++) {
+    tarefas.push({
+      texto: itens[i].dataset.texto,
+      categoria: itens[i].dataset.categoria,
+      coluna: itens[i].parentElement.id // "pendentes" ou "concluidas"
+    });
+  }
+
+  localStorage.setItem("hextask", JSON.stringify(tarefas));
 }
 
 // Coloca a tarefa em uma coluna e risca se for "Feito"
@@ -37,10 +70,11 @@ function moverPara(item, coluna) {
   }
 
   atualizarContadores();
+  salvar();
 }
 
 // Cria o item da lista com etiqueta, arrastar, clicar e excluir
-function criarTarefa(texto, cat) {
+function criarTarefa(texto, cat, nomeColuna) {
   var item = document.createElement("li");
   item.draggable = true;
   item.dataset.texto = texto;
@@ -88,12 +122,14 @@ function criarTarefa(texto, cat) {
     evento.stopPropagation(); // não deixa o clique trocar a tarefa de coluna
     item.remove();
     atualizarContadores();
+    salvar();
   };
 
   item.appendChild(excluir);
 
-  // Toda tarefa nova começa em "A fazer"
-  moverPara(item, pendentes);
+  // Coloca na coluna certa (se não vier nenhuma, vai para "A fazer")
+  var coluna = document.getElementById(nomeColuna) || pendentes;
+  moverPara(item, coluna);
 }
 
 // Faz cada coluna aceitar tarefas arrastadas
@@ -127,7 +163,7 @@ function adicionar() {
     return;
   }
 
-  criarTarefa(texto, categoria.value);
+  criarTarefa(texto, categoria.value, "pendentes");
 
   // Limpa o campo e deixa pronto pra digitar a próxima
   campo.value = "";
@@ -147,4 +183,47 @@ campo.onkeydown = function (evento) {
 limpar.onclick = function () {
   concluidas.innerHTML = "";
   atualizarContadores();
+  salvar();
 };
+
+// Liga ou desliga o tema escuro e guarda a escolha
+var tema = document.getElementById("tema");
+
+function aplicarTema(nome) {
+  // O botão mostra só o ícone; o title e o aria-label dizem o que ele faz
+  if (nome == "escuro") {
+    document.body.classList.add("escuro");
+    tema.innerText = "☀";
+    tema.title = "Ativar tema claro";
+  } else {
+    document.body.classList.remove("escuro");
+    tema.innerText = "☾";
+    tema.title = "Ativar tema escuro";
+  }
+
+  tema.setAttribute("aria-label", tema.title);
+
+  localStorage.setItem("hextask-tema", nome);
+}
+
+// Clicar no botão troca para o outro tema
+tema.onclick = function () {
+  if (document.body.classList.contains("escuro")) {
+    aplicarTema("claro");
+  } else {
+    aplicarTema("escuro");
+  }
+};
+
+// Quando a página abre: aplica o tema salvo, mostra a saudação e carrega as tarefas
+aplicarTema(localStorage.getItem("hextask-tema") || "claro");
+mostrarSaudacao();
+
+// A cada 1 segundo (1000 milissegundos) atualiza a saudação e o horário
+setInterval(mostrarSaudacao, 1000);
+
+var salvas = JSON.parse(localStorage.getItem("hextask")) || [];
+
+for (var j = 0; j < salvas.length; j++) {
+  criarTarefa(salvas[j].texto, salvas[j].categoria, salvas[j].coluna);
+}
