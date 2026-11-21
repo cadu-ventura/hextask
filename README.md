@@ -23,7 +23,7 @@ A ideia é ter um quadro simples para anotar o que precisa ser feito (em casa, n
 
 ## Acesse online
 
-👉 **[cadu-ventura.github.io/to-do-list-venturus](https://cadu-ventura.github.io/to-do-list-venturus/)**
+**[cadu-ventura.github.io/to-do-list-venturus](https://cadu-ventura.github.io/to-do-list-venturus/)**
 
 ## Como usar no seu computador
 
