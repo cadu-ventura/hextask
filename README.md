@@ -23,13 +23,13 @@ A ideia é ter um quadro simples para anotar o que precisa ser feito (em casa, n
 
 ## Acesse online
 
-**[cadu-ventura.github.io/to-do-list-venturus](https://cadu-ventura.github.io/to-do-list-venturus/)**
+**[cadu-ventura.github.io/hextask](https://cadu-ventura.github.io/hextask/)**
 
 ## Como usar no seu computador
 
 1. Baixe ou clone o repositório:
    ```
-   git clone https://github.com/cadu-ventura/to-do-list-venturus.git
+   git clone https://github.com/cadu-ventura/hextask.git
    ```
 2. Abra o arquivo `index.html` no navegador.
 
@@ -61,6 +61,7 @@ assets/img/       → logo
 15. Acessibilidade
 16. Site publicado no GitHub Pages e LinkedIn dos autores
 17. Ajusta layout no celular
+18. Renomeia o repositório para hextask
 
 ## Autores
 
