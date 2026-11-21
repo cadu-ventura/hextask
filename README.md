@@ -21,7 +21,11 @@ A ideia é ter um quadro simples para anotar o que precisa ser feito (em casa, n
 - Tarefas e tema ficam **salvos no navegador** (`localStorage`)
 - **Acessibilidade**: HTML semântico, labels, textos alternativos, uso pelo teclado (Tab e Enter) e bom contraste nos dois temas
 
-## Como usar
+## Acesse online
+
+👉 **[cadu-ventura.github.io/to-do-list-venturus](https://cadu-ventura.github.io/to-do-list-venturus/)**
+
+## Como usar no seu computador
 
 1. Baixe ou clone o repositório:
    ```
@@ -55,9 +59,12 @@ assets/img/       → logo
 13. Atualiza README
 14. Prioridades e ordenação
 15. Acessibilidade
+16. Site publicado no GitHub Pages e LinkedIn dos autores
 
 ## Autores
 
-- [Carlos Ventura](https://github.com/cadu-ventura)
-- [Victor Santos de Souza](https://github.com/VictorSantosdeSouza)
-- [Matheus Victor](https://github.com/matheusvictor01)
+| Nome | GitHub | LinkedIn |
+|---|---|---|
+| Carlos Ventura | [cadu-ventura](https://github.com/cadu-ventura) | [carloseduardovs](https://www.linkedin.com/in/carloseduardovs/) |
+| Victor Santos de Souza | [VictorSantosdeSouza](https://github.com/VictorSantosdeSouza) | [victor-santos-de-souza](https://www.linkedin.com/in/victor-santos-de-souza/) |
+| Matheus Victor | [matheusvictor01](https://github.com/matheusvictor01) | [matheusv-nunes](https://www.linkedin.com/in/matheusv-nunes/) |
