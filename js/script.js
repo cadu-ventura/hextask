@@ -74,6 +74,7 @@ function atualizarResumo() {
 
   document.getElementById("porcentagem").innerText = porcentagem;
   document.getElementById("barra-cheia").style.width = porcentagem + "%";
+  document.getElementById("barra").setAttribute("aria-valuenow", porcentagem); // valor pro leitor de tela
 
   var texto = document.getElementById("texto-progresso");
 
@@ -296,10 +297,28 @@ function criarTarefa(texto, cat, nomeColuna, prio) {
     }
   };
 
+  // Com o teclado: Tab chega no cartão e Enter (ou espaço) avança de coluna
+  item.tabIndex = 0;
+
+  item.onkeydown = function (evento) {
+    // Só quando o foco está no próprio cartão (não no texto sendo editado nem nos botões)
+    if (evento.target != item) {
+      return;
+    }
+
+    if (evento.key == "Enter" || evento.key == " ") {
+      evento.preventDefault(); // o espaço não pode rolar a página
+      item.onclick();
+      item.focus(); // o foco continua no cartão depois de mudar de coluna
+    }
+  };
+
   // Cria o botão de excluir
   var excluir = document.createElement("button");
   excluir.innerText = "X";
   excluir.className = "excluir";
+  excluir.title = "Excluir tarefa";
+  excluir.setAttribute("aria-label", "Excluir tarefa");
 
   // Clicar no X apaga a tarefa
   excluir.onclick = function (evento) {
@@ -342,11 +361,14 @@ for (var i = 0; i < colunas.length; i++) {
 for (var f = 0; f < filtros.length; f++) {
   filtros[f].onclick = function () {
     // Tira o destaque de todos os botões e coloca só no clicado
+    // (o aria-pressed avisa o leitor de tela qual botão está ligado)
     for (var k = 0; k < filtros.length; k++) {
       filtros[k].classList.remove("ativo");
+      filtros[k].setAttribute("aria-pressed", "false");
     }
 
     this.classList.add("ativo");
+    this.setAttribute("aria-pressed", "true");
     filtroAtual = this.dataset.categoria;
     aplicarFiltro();
   };

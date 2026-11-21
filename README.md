@@ -19,6 +19,7 @@ A ideia é ter um quadro simples para anotar o que precisa ser feito (em casa, n
 - Saudação com a data e o horário do computador
 - Tema **claro** e **escuro**
 - Tarefas e tema ficam **salvos no navegador** (`localStorage`)
+- **Acessibilidade**: HTML semântico, labels, textos alternativos, uso pelo teclado (Tab e Enter) e bom contraste nos dois temas
 
 ## Como usar
 
@@ -53,6 +54,7 @@ assets/img/       → logo
 12. Concluir pelo círculo e editar tarefas
 13. Atualiza README
 14. Prioridades e ordenação
+15. Acessibilidade
 
 ## Autores
 

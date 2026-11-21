@@ -12,92 +12,104 @@
 <body>
 
   <div class="caixa">
-    <div class="topo">
-      <img src="assets/img/logo.png" alt="" class="logo">
+    <header class="topo">
+      <img src="assets/img/logo.png" alt="Logo do HexTask: um cristal azul dentro de um emblema dourado" class="logo">
       <div>
         <h1>HexTask</h1>
         <p id="saudacao"></p>
       </div>
       <button id="tema" title="Ativar tema escuro" aria-label="Ativar tema escuro">☾</button>
-    </div>
+    </header>
 
-    <div class="formulario">
-      <input type="text" id="campo" placeholder="O que você precisa fazer hoje?">
-      <select id="categoria">
-        <option value="casa">Casa</option>
-        <option value="trabalho">Trabalho</option>
-        <option value="estudos">Estudos</option>
-        <option value="mercado">Mercado</option>
-        <option value="saude">Saúde</option>
-        <option value="outros">Outros</option>
-      </select>
-      <select id="prioridade">
-        <option value="alta">Prioridade alta</option>
-        <option value="media" selected>Prioridade média</option>
-        <option value="baixa">Prioridade baixa</option>
-      </select>
-      <button id="botao">Adicionar</button>
-    </div>
+    <main>
+      <!-- Formulário para criar uma tarefa (os labels ficam escondidos na tela, mas o leitor de tela lê) -->
+      <section class="formulario" aria-label="Nova tarefa">
+        <label for="campo" class="so-leitor">Tarefa</label>
+        <input type="text" id="campo" placeholder="O que você precisa fazer hoje?">
 
-    <div class="conteudo">
+        <label for="categoria" class="so-leitor">Categoria</label>
+        <select id="categoria">
+          <option value="casa">Casa</option>
+          <option value="trabalho">Trabalho</option>
+          <option value="estudos">Estudos</option>
+          <option value="mercado">Mercado</option>
+          <option value="saude">Saúde</option>
+          <option value="outros">Outros</option>
+        </select>
 
-      <!-- Painel com o resumo do dia -->
-      <div class="resumo">
-        <h3>Progresso do dia</h3>
-        <p class="porcentagem"><span id="porcentagem">0</span>%</p>
-        <div class="barra">
-          <div id="barra-cheia" class="barra-cheia"></div>
+        <label for="prioridade" class="so-leitor">Prioridade</label>
+        <select id="prioridade">
+          <option value="alta">Prioridade alta</option>
+          <option value="media" selected>Prioridade média</option>
+          <option value="baixa">Prioridade baixa</option>
+        </select>
+
+        <button id="botao">Adicionar</button>
+      </section>
+
+      <div class="conteudo">
+
+        <!-- Painel com o resumo do dia -->
+        <aside class="resumo" aria-label="Resumo do dia">
+          <h2 class="titulo-painel">Progresso do dia</h2>
+          <p class="porcentagem"><span id="porcentagem">0</span>%</p>
+          <div id="barra" class="barra" role="progressbar" aria-label="Progresso do dia" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div id="barra-cheia" class="barra-cheia"></div>
+          </div>
+          <!-- aria-live: o leitor de tela avisa quando esse texto muda -->
+          <p id="texto-progresso" class="texto-progresso" aria-live="polite">Nenhuma tarefa ainda</p>
+
+          <h2 class="titulo-painel">Categorias</h2>
+          <div class="filtros">
+            <button class="filtro ativo" data-categoria="todas" aria-pressed="true">
+              <span class="bolinha todas" aria-hidden="true"></span> Todas <span class="quantidade" id="qtd-todas">0</span>
+            </button>
+            <button class="filtro" data-categoria="casa" aria-pressed="false">
+              <span class="bolinha casa" aria-hidden="true"></span> Casa <span class="quantidade" id="qtd-casa">0</span>
+            </button>
+            <button class="filtro" data-categoria="trabalho" aria-pressed="false">
+              <span class="bolinha trabalho" aria-hidden="true"></span> Trabalho <span class="quantidade" id="qtd-trabalho">0</span>
+            </button>
+            <button class="filtro" data-categoria="estudos" aria-pressed="false">
+              <span class="bolinha estudos" aria-hidden="true"></span> Estudos <span class="quantidade" id="qtd-estudos">0</span>
+            </button>
+            <button class="filtro" data-categoria="mercado" aria-pressed="false">
+              <span class="bolinha mercado" aria-hidden="true"></span> Mercado <span class="quantidade" id="qtd-mercado">0</span>
+            </button>
+            <button class="filtro" data-categoria="saude" aria-pressed="false">
+              <span class="bolinha saude" aria-hidden="true"></span> Saúde <span class="quantidade" id="qtd-saude">0</span>
+            </button>
+            <button class="filtro" data-categoria="outros" aria-pressed="false">
+              <span class="bolinha outros" aria-hidden="true"></span> Outros <span class="quantidade" id="qtd-outros">0</span>
+            </button>
+          </div>
+        </aside>
+
+        <!-- Quadro com as 3 colunas -->
+        <div class="quadro">
+          <section class="coluna" aria-labelledby="titulo-pendentes">
+            <h2 id="titulo-pendentes">A fazer <span id="total-pendentes">0</span></h2>
+            <ul id="pendentes" class="lista"></ul>
+          </section>
+
+          <section class="coluna" aria-labelledby="titulo-fazendo">
+            <h2 id="titulo-fazendo">Fazendo <span id="total-fazendo">0</span></h2>
+            <ul id="fazendo" class="lista"></ul>
+          </section>
+
+          <section class="coluna" aria-labelledby="titulo-concluidas">
+            <h2 id="titulo-concluidas">Feito <span id="total-concluidas">0</span></h2>
+            <ul id="concluidas" class="lista"></ul>
+            <button id="limpar">Limpar concluídas</button>
+          </section>
         </div>
-        <p id="texto-progresso" class="texto-progresso">Nenhuma tarefa ainda</p>
 
-        <h3>Categorias</h3>
-        <div class="filtros">
-          <button class="filtro ativo" data-categoria="todas">
-            <span class="bolinha todas"></span> Todas <span class="quantidade" id="qtd-todas">0</span>
-          </button>
-          <button class="filtro" data-categoria="casa">
-            <span class="bolinha casa"></span> Casa <span class="quantidade" id="qtd-casa">0</span>
-          </button>
-          <button class="filtro" data-categoria="trabalho">
-            <span class="bolinha trabalho"></span> Trabalho <span class="quantidade" id="qtd-trabalho">0</span>
-          </button>
-          <button class="filtro" data-categoria="estudos">
-            <span class="bolinha estudos"></span> Estudos <span class="quantidade" id="qtd-estudos">0</span>
-          </button>
-          <button class="filtro" data-categoria="mercado">
-            <span class="bolinha mercado"></span> Mercado <span class="quantidade" id="qtd-mercado">0</span>
-          </button>
-          <button class="filtro" data-categoria="saude">
-            <span class="bolinha saude"></span> Saúde <span class="quantidade" id="qtd-saude">0</span>
-          </button>
-          <button class="filtro" data-categoria="outros">
-            <span class="bolinha outros"></span> Outros <span class="quantidade" id="qtd-outros">0</span>
-          </button>
-        </div>
       </div>
+    </main>
 
-      <!-- Quadro com as 3 colunas -->
-      <div class="quadro">
-        <div class="coluna">
-          <h2>A fazer <span id="total-pendentes">0</span></h2>
-          <ul id="pendentes" class="lista"></ul>
-        </div>
-
-        <div class="coluna">
-          <h2>Fazendo <span id="total-fazendo">0</span></h2>
-          <ul id="fazendo" class="lista"></ul>
-        </div>
-
-        <div class="coluna">
-          <h2>Feito <span id="total-concluidas">0</span></h2>
-          <ul id="concluidas" class="lista"></ul>
-          <button id="limpar">Limpar concluídas</button>
-        </div>
-      </div>
-
-    </div>
-
-    <p class="dica">Clique numa tarefa para avançar de coluna ou arraste para onde quiser. Suas tarefas ficam salvas neste navegador.</p>
+    <footer class="dica">
+      Clique numa tarefa (ou use Tab e Enter) para avançar de coluna, ou arraste para onde quiser. Suas tarefas ficam salvas neste navegador.
+    </footer>
   </div>
 
   <script src="js/script.js"></script>
