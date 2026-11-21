@@ -21,6 +21,14 @@
 
     <div class="formulario">
       <input type="text" id="campo" placeholder="O que você precisa fazer hoje?">
+      <select id="categoria">
+        <option value="casa">Casa</option>
+        <option value="trabalho">Trabalho</option>
+        <option value="estudos">Estudos</option>
+        <option value="mercado">Mercado</option>
+        <option value="saude">Saúde</option>
+        <option value="outros">Outros</option>
+      </select>
       <button id="botao">Adicionar</button>
     </div>
 
@@ -36,6 +44,7 @@
         <div class="coluna">
           <h2>Feito <span id="total-concluidas">0</span></h2>
           <ul id="concluidas" class="lista"></ul>
+          <button id="limpar">Limpar concluídas</button>
         </div>
       </div>
 
