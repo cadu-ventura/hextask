@@ -316,8 +316,9 @@ h2 span {
 
 /* Cada tarefa */
 li {
+  /* Círculo, conteúdo e X lado a lado, presos no topo quando o texto é grande */
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   list-style: none;
   padding: 12px 14px;
@@ -337,12 +338,54 @@ li[hidden] {
   display: none;
 }
 
-/* O texto ocupa o espaço do meio e quebra linha se for grande */
-.texto {
+/* Meio do cartão: etiqueta em cima, texto embaixo, ocupando o espaço que sobra */
+.corpo {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+/* O texto quebra linha se for grande */
+.texto {
   line-height: 1.4;
   overflow-wrap: anywhere;
+}
+
+/* Círculo para marcar como feita */
+.marcar {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  background-color: transparent;
+  border: 2px solid var(--texto-apagado);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.marcar:hover {
+  border-color: var(--destaque);
+}
+
+/* Quando a tarefa está feita, o círculo fica preenchido com um ✓ */
+.feita .marcar {
+  background-color: var(--destaque);
+  border-color: var(--destaque);
+}
+
+.feita .marcar::after {
+  content: "✓";
 }
 
 li:hover {
@@ -371,7 +414,7 @@ li:hover {
   border-left: 3px solid var(--destaque);
 }
 
-/* Só o texto fica riscado (a etiqueta e o botão não) */
+/* Só o texto fica riscado (a etiqueta e os botões não) */
 .feita .texto {
   text-decoration: line-through;
   color: var(--texto-apagado);
@@ -412,6 +455,39 @@ body.escuro .outros   { color: #D1D5DB; }
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s;
+}
+
+/* Lápis de editar: mesmo jeito do X, mas fica azul no hover */
+.editar {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  font-size: 15px;
+  color: var(--texto-apagado);
+  background-color: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.editar:hover {
+  color: var(--destaque);
+  background-color: var(--destaque-fundo);
+}
+
+/* Texto enquanto está sendo editado */
+.texto[contenteditable="true"] {
+  align-self: stretch;
+  padding: 2px 4px;
+  margin: -2px -4px;
+  text-decoration: none;
+  color: var(--texto);
+  background-color: var(--caixa);
+  border-radius: 4px;
+  outline: 2px solid var(--destaque);
+  cursor: text;
 }
 
 .excluir:hover {

@@ -138,17 +138,93 @@ function criarTarefa(texto, cat, nomeColuna) {
   item.dataset.texto = texto;
   item.dataset.categoria = cat;
 
-  // Etiqueta colorida com a categoria
+  // Círculo da esquerda: marca como feita (ou desmarca)
+  var marcar = document.createElement("button");
+  marcar.className = "marcar";
+  marcar.title = "Marcar como concluída";
+  marcar.setAttribute("aria-label", "Marcar como concluída");
+
+  marcar.onclick = function (evento) {
+    evento.stopPropagation(); // não deixa o clique do cartão rodar junto
+    if (item.parentElement == concluidas) {
+      moverPara(item, pendentes);
+    } else {
+      moverPara(item, concluidas);
+    }
+  };
+
+  item.appendChild(marcar);
+
+  // Meio do cartão: etiqueta em cima e o texto embaixo
+  var corpo = document.createElement("div");
+  corpo.className = "corpo";
+
   var etiqueta = document.createElement("span");
   etiqueta.innerText = nomesCategorias[cat];
   etiqueta.className = "etiqueta " + cat;
-  item.appendChild(etiqueta);
+  corpo.appendChild(etiqueta);
 
-  // Texto da tarefa
   var textoTarefa = document.createElement("span");
   textoTarefa.innerText = texto;
   textoTarefa.className = "texto";
-  item.appendChild(textoTarefa);
+  corpo.appendChild(textoTarefa);
+
+  item.appendChild(corpo);
+
+  // Enquanto edita, clicar no texto não pode mover o cartão de coluna
+  textoTarefa.onclick = function (evento) {
+    if (textoTarefa.isContentEditable) {
+      evento.stopPropagation();
+    }
+  };
+
+  // Enter salva e Esc cancela a edição
+  textoTarefa.onkeydown = function (evento) {
+    if (evento.key == "Enter") {
+      evento.preventDefault(); // não deixa pular linha
+      textoTarefa.blur();
+    } else if (evento.key == "Escape") {
+      textoTarefa.innerText = item.dataset.texto; // volta o texto antigo
+      textoTarefa.blur();
+    }
+  };
+
+  // Quando sai do texto (Enter, Esc ou clicando fora), termina a edição
+  textoTarefa.onblur = function () {
+    textoTarefa.contentEditable = "false";
+    item.draggable = true;
+
+    var novoTexto = textoTarefa.innerText.trim();
+
+    // Se apagou tudo, volta o texto antigo
+    if (novoTexto == "") {
+      textoTarefa.innerText = item.dataset.texto;
+    } else {
+      item.dataset.texto = novoTexto;
+      textoTarefa.innerText = novoTexto;
+      salvar();
+    }
+  };
+
+  // Botão de editar (lápis)
+  var editar = document.createElement("button");
+  editar.innerText = "✎";
+  editar.className = "editar";
+  editar.title = "Editar tarefa";
+  editar.setAttribute("aria-label", "Editar tarefa");
+
+  editar.onclick = function (evento) {
+    evento.stopPropagation(); // não deixa o clique trocar a tarefa de coluna
+    item.draggable = false; // pra conseguir selecionar o texto com o mouse
+    textoTarefa.contentEditable = "true";
+    textoTarefa.focus();
+
+    // Seleciona o texto todo, pronto pra digitar por cima
+    var selecao = window.getSelection();
+    selecao.selectAllChildren(textoTarefa);
+  };
+
+  item.appendChild(editar);
 
   // Começou a arrastar
   item.ondragstart = function () {
