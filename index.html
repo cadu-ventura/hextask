@@ -2,30 +2,46 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>To Do List</title>
-  <link rel="icon" href="assets/img/logo-simbolo.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HexTask</title>
+  <link rel="icon" href="assets/img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
   <div class="caixa">
-    <img src="assets/img/logo-venturus.svg" alt="Venturus" class="logo">
-    <h1>Minhas tarefas</h1>
-
-    <input type="text" id="campo" placeholder="O que precisa ser feito?">
-    <button id="botao">Adicionar</button>
-
-    <div class="quadro">
-      <div class="coluna">
-        <h2>Pendentes <span id="total-pendentes">0</span></h2>
-        <ul id="pendentes" class="lista"></ul>
-      </div>
-
-      <div class="coluna">
-        <h2>Concluídas <span id="total-concluidas">0</span></h2>
-        <ul id="concluidas" class="lista"></ul>
+    <div class="topo">
+      <img src="assets/img/logo.png" alt="" class="logo">
+      <div>
+        <h1>HexTask</h1>
       </div>
     </div>
+
+    <div class="formulario">
+      <input type="text" id="campo" placeholder="O que você precisa fazer hoje?">
+      <button id="botao">Adicionar</button>
+    </div>
+
+    <div class="conteudo">
+
+      <!-- Quadro com as colunas -->
+      <div class="quadro">
+        <div class="coluna">
+          <h2>A fazer <span id="total-pendentes">0</span></h2>
+          <ul id="pendentes" class="lista"></ul>
+        </div>
+
+        <div class="coluna">
+          <h2>Feito <span id="total-concluidas">0</span></h2>
+          <ul id="concluidas" class="lista"></ul>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="dica">Clique numa tarefa ou arraste para mudar de coluna.</p>
   </div>
 
   <script src="js/script.js"></script>

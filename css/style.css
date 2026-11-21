@@ -1,95 +1,197 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #8716D5;
+/* ===== Cores da página ===== */
+:root {
+  color-scheme: light;
+  --fundo: #F4F5F7;
+  --caixa: #FFFFFF;
+  --coluna: #EBEDF0;
+  --cartao: #FFFFFF;
+  --linha: #E5E7EB;
+  --texto: #111827;
+  --texto-suave: #6B7280;
+  --texto-apagado: #9CA3AF;
+  --destaque: #2563EB;
+  --destaque-hover: #1D4ED8;
+  --destaque-fundo: #EFF6FF;
+  --sombra: 0 1px 3px rgba(17, 24, 39, 0.08);
+  --sombra-forte: 0 10px 30px rgba(17, 24, 39, 0.08);
 }
 
+body {
+  margin: 0;
+  font-family: "Inter", Arial, sans-serif;
+  color: var(--texto);
+  background-color: var(--fundo);
+}
+
+/* A página ocupa a tela inteira, como no Trello */
 .caixa {
-  width: 640px;
-  max-width: 100%;
-  box-sizing: border-box;
-  margin: 50px auto;
-  padding: 30px;
-  background-color: white;
-  border-radius: 15px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Cabeçalho: barra de ponta a ponta no topo */
+.topo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 28px;
+  background-color: var(--caixa);
+  border-bottom: 1px solid var(--linha);
 }
 
 .logo {
-  width: 180px;
+  width: 48px;
 }
 
 h1 {
-  color: #3A0764;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* Formulário */
+.formulario {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 20px 28px 0;
 }
 
 #campo {
-  width: 250px;
-  padding: 10px;
-  border: 2px solid #D8B4FE;
-  border-radius: 8px;
+  flex: 1;
+  min-width: 180px;
+  padding: 11px 14px;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--texto);
+  background-color: var(--caixa);
+  border: 1px solid var(--linha);
+  border-radius: 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#campo::placeholder {
+  color: var(--texto-apagado);
+}
+
+#campo:focus {
+  outline: none;
+  border-color: var(--destaque);
+  box-shadow: 0 0 0 3px var(--destaque-fundo);
 }
 
 #botao {
-  padding: 10px 15px;
-  background-color: #8716D5;
+  padding: 11px 20px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
   color: white;
+  background-color: var(--destaque);
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 #botao:hover {
-  background-color: #3A0764;
+  background-color: var(--destaque-hover);
 }
 
-.quadro {
+/* Ocupa todo o espaço que sobra até o fim da tela */
+.conteudo {
+  flex: 1;
   display: flex;
-  gap: 15px;
-  margin-top: 20px;
-  text-align: left;
+  gap: 20px;
+  padding: 20px 28px;
 }
 
+/* Quadro com as colunas */
+.quadro {
+  flex: 1;
+  display: flex;
+  gap: 16px;
+  min-width: 0;
+}
+
+/* Cada coluna vai até embaixo da tela */
 .coluna {
   flex: 1;
-  padding: 10px;
-  background-color: #FAF6FF;
-  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  background-color: var(--coluna);
+  border-radius: 12px;
 }
 
 h2 {
-  margin: 0 0 5px;
-  font-size: 16px;
-  color: #3A0764;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--texto-suave);
 }
 
+/* Contador ao lado do nome da coluna */
 h2 span {
-  padding: 2px 8px;
-  font-size: 13px;
-  background-color: #D8B4FE;
-  border-radius: 10px;
+  padding: 1px 8px;
+  font-size: 12px;
+  color: var(--texto-suave);
+  background-color: var(--linha);
+  border-radius: 999px;
 }
 
+/* A lista estica e ocupa a coluna toda, então dá pra soltar tarefa em qualquer lugar dela */
 .lista {
-  min-height: 80px;
+  flex: 1;
+  min-height: 150px;
   margin: 0;
-  padding: 5px;
+  padding: 4px;
   border: 2px dashed transparent;
-  border-radius: 8px;
+  border-radius: 10px;
+  transition: all 0.2s;
 }
 
 .lista.destaque {
-  border-color: #8716D5;
-  background-color: #F6EEFF;
+  border-color: var(--destaque);
+  background-color: var(--destaque-fundo);
 }
 
+/* Cada tarefa */
 li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   list-style: none;
-  padding: 10px;
+  padding: 12px 14px;
   margin-top: 8px;
-  border-left: 4px solid #9233EA;
-  background-color: #F6EEFF;
-  border-radius: 8px;
+  font-size: 15px;
+  background-color: var(--cartao);
+  border: 1px solid var(--linha);
+  border-radius: 10px;
+  box-shadow: var(--sombra);
   cursor: grab;
+  transition: box-shadow 0.2s, transform 0.2s;
+  animation: aparecer 0.25s ease-out;
+}
+
+li:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--sombra-forte);
+}
+
+/* Animação quando a tarefa entra na lista */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .arrastando {
@@ -98,20 +200,53 @@ li {
 
 .feita {
   text-decoration: line-through;
-  color: gray;
+  color: var(--texto-apagado);
 }
 
 .excluir {
-  float: right;
-  background-color: #3A0764;
-  color: white;
+  flex-shrink: 0;
+  margin-left: auto;
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+  color: var(--texto-apagado);
+  background-color: transparent;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: all 0.2s;
 }
 
+.excluir:hover {
+  color: #DC2626;
+  background-color: rgba(239, 68, 68, 0.12);
+}
 
-@media (max-width: 500px) {
+.dica {
+  margin: 0;
+  padding: 0 28px 16px;
+  font-size: 13px;
+  color: var(--texto-apagado);
+  text-align: center;
+}
+
+/* Celular */
+@media (max-width: 600px) {
+  /* Menos espaço nas laterais */
+  .topo,
+  .conteudo {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .formulario {
+    padding: 16px 16px 0;
+  }
+
+  .dica {
+    padding: 0 16px 16px;
+  }
+
   .quadro {
     flex-direction: column;
   }
