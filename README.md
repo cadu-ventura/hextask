@@ -24,7 +24,7 @@ A ideia é ter um quadro simples para anotar o que precisa ser feito (em casa, n
 
 ## Acesse online
 
-**[cadu-ventura.github.io/hextask](https://cadu-ventura.github.io/hextask/)**
+**[hextask-app.vercel.app](https://hextask-app.vercel.app/)**
 
 ## Instalar como app no celular
 
@@ -72,6 +72,7 @@ assets/img/       → logo e ícones do app
 18. Renomeia o repositório para hextask
 19. Instalar como app (PWA)
 20. Limpeza do código
+21. Site publicado só na Vercel
 
 ## Autores
 
