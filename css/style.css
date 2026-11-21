@@ -612,17 +612,56 @@ body.escuro .nivel.baixa { color: #4ADE80; }
     padding-right: 16px;
   }
 
-  .formulario {
-    padding: 16px 16px 0;
-  }
-
   .dica {
     padding: 0 16px 16px;
   }
 
-  /* No celular o botão de tema desce pra linha de baixo */
+  /* Cabeçalho: logo, título e botão continuam na mesma linha */
   .topo {
-    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .logo {
+    width: 40px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  /* O bloco do título encolhe e a saudação quebra linha se precisar */
+  .topo > div {
+    flex: 1;
+    min-width: 0;
+  }
+
+  #saudacao {
+    font-size: 13px;
+  }
+
+  #tema {
+    flex-shrink: 0;
+  }
+
+  /* Formulário em grade: campo inteiro em cima, os dois seletores lado a lado
+     e o botão inteiro embaixo */
+  .formulario {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 16px 16px 0;
+  }
+
+  #campo,
+  #botao {
+    grid-column: 1 / -1;
+  }
+
+  #campo,
+  #categoria,
+  #prioridade {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   .quadro {

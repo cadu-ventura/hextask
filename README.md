@@ -60,6 +60,7 @@ assets/img/       → logo
 14. Prioridades e ordenação
 15. Acessibilidade
 16. Site publicado no GitHub Pages e LinkedIn dos autores
+17. Ajusta layout no celular
 
 ## Autores
 
