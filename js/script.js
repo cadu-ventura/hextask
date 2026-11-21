@@ -424,6 +424,14 @@ function aplicarTema(nome) {
 
   tema.setAttribute("aria-label", tema.title);
 
+  // Com o app instalado, a barra de cima do celular acompanha o tema
+  var corBarra = document.querySelector('meta[name="theme-color"]');
+  if (nome == "escuro") {
+    corBarra.setAttribute("content", "#171A21");
+  } else {
+    corBarra.setAttribute("content", "#FFFFFF");
+  }
+
   localStorage.setItem("hextask-tema", nome);
 }
 

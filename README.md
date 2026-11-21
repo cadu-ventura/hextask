@@ -20,10 +20,17 @@ A ideia é ter um quadro simples para anotar o que precisa ser feito (em casa, n
 - Tema **claro** e **escuro**
 - Tarefas e tema ficam **salvos no navegador** (`localStorage`)
 - **Acessibilidade**: HTML semântico, labels, textos alternativos, uso pelo teclado (Tab e Enter) e bom contraste nos dois temas
+- **Instalar como app** (PWA): ícone na tela inicial do celular e abre em tela cheia
 
 ## Acesse online
 
 **[cadu-ventura.github.io/hextask](https://cadu-ventura.github.io/hextask/)**
+
+## Instalar como app no celular
+
+- **Android (Chrome):** abra o site, toque no menu **⋮** e escolha **Instalar app** (ou **Adicionar à tela inicial**).
+- **iPhone (Safari):** abra o site, toque em **Compartilhar** e escolha **Adicionar à Tela de Início**.
+- **Computador (Chrome ou Edge):** clique no ícone de instalar na barra de endereço.
 
 ## Como usar no seu computador
 
@@ -39,7 +46,8 @@ A ideia é ter um quadro simples para anotar o que precisa ser feito (em casa, n
 index.html        → estrutura da página
 css/style.css     → estilo da página (cores dos temas em variáveis)
 js/script.js      → funcionamento da lista
-assets/img/       → logo
+manifest.json     → configuração para instalar como app
+assets/img/       → logo e ícones do app
 ```
 
 ## Etapas do projeto
@@ -62,6 +70,7 @@ assets/img/       → logo
 16. Site publicado no GitHub Pages e LinkedIn dos autores
 17. Ajusta layout no celular
 18. Renomeia o repositório para hextask
+19. Instalar como app (PWA)
 
 ## Autores
 
