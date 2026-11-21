@@ -150,6 +150,7 @@ h1 {
   background-color: var(--destaque-hover);
 }
 
+/* Painel de resumo à esquerda + quadro à direita */
 /* Ocupa todo o espaço que sobra até o fim da tela */
 .conteudo {
   flex: 1;
@@ -157,6 +158,108 @@ h1 {
   gap: 20px;
   padding: 20px 28px;
 }
+
+/* Painel com o resumo do dia */
+.resumo {
+  align-self: flex-start;
+  width: 240px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  padding: 18px;
+  background-color: var(--coluna);
+  border-radius: 12px;
+}
+
+h3 {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--texto-apagado);
+}
+
+.porcentagem {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 700;
+}
+
+/* Barra de progresso: o fundo cinza e a parte azul que vai enchendo */
+.barra {
+  height: 8px;
+  margin-top: 8px;
+  background-color: var(--linha);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.barra-cheia {
+  width: 0%;
+  height: 100%;
+  background-color: var(--destaque);
+  border-radius: 999px;
+  transition: width 0.4s;
+}
+
+.texto-progresso {
+  margin: 8px 0 24px;
+  font-size: 13px;
+  color: var(--texto-suave);
+}
+
+/* Botões de filtro por categoria */
+.filtros {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.filtro {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  font-family: inherit;
+  font-size: 14px;
+  text-align: left;
+  color: var(--texto);
+  background-color: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.filtro:hover {
+  background-color: var(--linha);
+}
+
+.filtro.ativo {
+  font-weight: 600;
+  background-color: var(--destaque-fundo);
+}
+
+.quantidade {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--texto-apagado);
+}
+
+/* Bolinha colorida de cada categoria */
+.bolinha {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.bolinha.todas    { background-color: var(--texto-apagado); }
+.bolinha.casa     { background-color: #F59E0B; }
+.bolinha.trabalho { background-color: #3B82F6; }
+.bolinha.estudos  { background-color: #A855F7; }
+.bolinha.mercado  { background-color: #22C55E; }
+.bolinha.saude    { background-color: #EF4444; }
+.bolinha.outros   { background-color: #6B7280; }
 
 /* Quadro com as colunas */
 .quadro {
@@ -229,6 +332,11 @@ li {
   animation: aparecer 0.25s ease-out;
 }
 
+/* Tarefas escondidas pelo filtro (o display: flex acima não pode ganhar do hidden) */
+li[hidden] {
+  display: none;
+}
+
 /* O texto ocupa o espaço do meio e quebra linha se for grande */
 .texto {
   flex: 1;
@@ -256,6 +364,11 @@ li:hover {
 
 .arrastando {
   opacity: 0.4;
+}
+
+/* Tarefas em andamento ganham uma faixa azul do lado */
+#fazendo li {
+  border-left: 3px solid var(--destaque);
 }
 
 /* Só o texto fica riscado (a etiqueta e o botão não) */
@@ -331,6 +444,24 @@ body.escuro .outros   { color: #D1D5DB; }
   font-size: 13px;
   color: var(--texto-apagado);
   text-align: center;
+}
+
+/* Telas médias (notebook pequeno, tablet): o painel vai para cima do quadro */
+@media (max-width: 900px) {
+  .conteudo {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .resumo {
+    align-self: stretch;
+    width: 100%;
+  }
+
+  .filtros {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 }
 
 /* Celular */

@@ -36,11 +36,51 @@
 
     <div class="conteudo">
 
-      <!-- Quadro com as colunas -->
+      <!-- Painel com o resumo do dia -->
+      <div class="resumo">
+        <h3>Progresso do dia</h3>
+        <p class="porcentagem"><span id="porcentagem">0</span>%</p>
+        <div class="barra">
+          <div id="barra-cheia" class="barra-cheia"></div>
+        </div>
+        <p id="texto-progresso" class="texto-progresso">Nenhuma tarefa ainda</p>
+
+        <h3>Categorias</h3>
+        <div class="filtros">
+          <button class="filtro ativo" data-categoria="todas">
+            <span class="bolinha todas"></span> Todas <span class="quantidade" id="qtd-todas">0</span>
+          </button>
+          <button class="filtro" data-categoria="casa">
+            <span class="bolinha casa"></span> Casa <span class="quantidade" id="qtd-casa">0</span>
+          </button>
+          <button class="filtro" data-categoria="trabalho">
+            <span class="bolinha trabalho"></span> Trabalho <span class="quantidade" id="qtd-trabalho">0</span>
+          </button>
+          <button class="filtro" data-categoria="estudos">
+            <span class="bolinha estudos"></span> Estudos <span class="quantidade" id="qtd-estudos">0</span>
+          </button>
+          <button class="filtro" data-categoria="mercado">
+            <span class="bolinha mercado"></span> Mercado <span class="quantidade" id="qtd-mercado">0</span>
+          </button>
+          <button class="filtro" data-categoria="saude">
+            <span class="bolinha saude"></span> Saúde <span class="quantidade" id="qtd-saude">0</span>
+          </button>
+          <button class="filtro" data-categoria="outros">
+            <span class="bolinha outros"></span> Outros <span class="quantidade" id="qtd-outros">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quadro com as 3 colunas -->
       <div class="quadro">
         <div class="coluna">
           <h2>A fazer <span id="total-pendentes">0</span></h2>
           <ul id="pendentes" class="lista"></ul>
+        </div>
+
+        <div class="coluna">
+          <h2>Fazendo <span id="total-fazendo">0</span></h2>
+          <ul id="fazendo" class="lista"></ul>
         </div>
 
         <div class="coluna">
@@ -52,7 +92,7 @@
 
     </div>
 
-    <p class="dica">Clique numa tarefa ou arraste para mudar de coluna. Suas tarefas ficam salvas neste navegador.</p>
+    <p class="dica">Clique numa tarefa para avançar de coluna ou arraste para onde quiser. Suas tarefas ficam salvas neste navegador.</p>
   </div>
 
   <script src="js/script.js"></script>

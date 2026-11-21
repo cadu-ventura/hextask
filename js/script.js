@@ -4,8 +4,10 @@ var categoria = document.getElementById("categoria");
 var botao = document.getElementById("botao");
 var limpar = document.getElementById("limpar");
 var pendentes = document.getElementById("pendentes");
+var fazendo = document.getElementById("fazendo");
 var concluidas = document.getElementById("concluidas");
 var colunas = document.querySelectorAll(".lista");
+var filtros = document.querySelectorAll(".filtro");
 
 // Nome que aparece na etiqueta de cada categoria
 var nomesCategorias = {
@@ -19,6 +21,9 @@ var nomesCategorias = {
 
 // Guarda a tarefa que está sendo arrastada
 var arrastando = null;
+
+// Categoria escolhida no painel ("todas" mostra tudo)
+var filtroAtual = "todas";
 
 // Mostra "Bom dia/Boa tarde/Boa noite", a data e o horário do computador
 function mostrarSaudacao() {
@@ -37,10 +42,63 @@ function mostrarSaudacao() {
   document.getElementById("saudacao").innerText = saudacao + "! Hoje é " + data + " · " + horario;
 }
 
-// Atualiza o número ao lado do nome de cada coluna
-function atualizarContadores() {
+// Atualiza os contadores das colunas, o progresso e as categorias do painel
+function atualizarResumo() {
+  // Contadores de cada coluna
   document.getElementById("total-pendentes").innerText = pendentes.children.length;
+  document.getElementById("total-fazendo").innerText = fazendo.children.length;
   document.getElementById("total-concluidas").innerText = concluidas.children.length;
+
+  // Progresso: quantas foram feitas do total
+  var total = pendentes.children.length + fazendo.children.length + concluidas.children.length;
+  var feitas = concluidas.children.length;
+  var porcentagem = 0;
+
+  if (total > 0) {
+    porcentagem = Math.round((feitas / total) * 100);
+  }
+
+  document.getElementById("porcentagem").innerText = porcentagem;
+  document.getElementById("barra-cheia").style.width = porcentagem + "%";
+
+  var texto = document.getElementById("texto-progresso");
+
+  if (total == 0) {
+    texto.innerText = "Nenhuma tarefa ainda";
+  } else if (feitas == total) {
+    texto.innerText = "Tudo feito! Bom trabalho 🎉";
+  } else {
+    texto.innerText = feitas + " de " + total + " tarefas concluídas";
+  }
+
+  // Quantas tarefas existem em cada categoria
+  var itens = document.querySelectorAll("li");
+  document.getElementById("qtd-todas").innerText = itens.length;
+
+  for (var cat in nomesCategorias) {
+    var quantidade = 0;
+
+    for (var i = 0; i < itens.length; i++) {
+      if (itens[i].dataset.categoria == cat) {
+        quantidade++;
+      }
+    }
+
+    document.getElementById("qtd-" + cat).innerText = quantidade;
+  }
+}
+
+// Esconde as tarefas que não são da categoria escolhida no painel
+function aplicarFiltro() {
+  var itens = document.querySelectorAll("li");
+
+  for (var i = 0; i < itens.length; i++) {
+    if (filtroAtual == "todas" || itens[i].dataset.categoria == filtroAtual) {
+      itens[i].hidden = false;
+    } else {
+      itens[i].hidden = true;
+    }
+  }
 }
 
 // Salva todas as tarefas no navegador (localStorage)
@@ -52,7 +110,7 @@ function salvar() {
     tarefas.push({
       texto: itens[i].dataset.texto,
       categoria: itens[i].dataset.categoria,
-      coluna: itens[i].parentElement.id // "pendentes" ou "concluidas"
+      coluna: itens[i].parentElement.id // "pendentes", "fazendo" ou "concluidas"
     });
   }
 
@@ -69,7 +127,7 @@ function moverPara(item, coluna) {
     item.classList.remove("feita");
   }
 
-  atualizarContadores();
+  atualizarResumo();
   salvar();
 }
 
@@ -103,9 +161,11 @@ function criarTarefa(texto, cat, nomeColuna) {
     item.classList.remove("arrastando");
   };
 
-  // Clicar na tarefa também troca de coluna
+  // Clicar na tarefa avança: A fazer → Fazendo → Feito → A fazer
   item.onclick = function () {
     if (item.parentElement == pendentes) {
+      moverPara(item, fazendo);
+    } else if (item.parentElement == fazendo) {
       moverPara(item, concluidas);
     } else {
       moverPara(item, pendentes);
@@ -121,7 +181,7 @@ function criarTarefa(texto, cat, nomeColuna) {
   excluir.onclick = function (evento) {
     evento.stopPropagation(); // não deixa o clique trocar a tarefa de coluna
     item.remove();
-    atualizarContadores();
+    atualizarResumo();
     salvar();
   };
 
@@ -130,6 +190,7 @@ function criarTarefa(texto, cat, nomeColuna) {
   // Coloca na coluna certa (se não vier nenhuma, vai para "A fazer")
   var coluna = document.getElementById(nomeColuna) || pendentes;
   moverPara(item, coluna);
+  aplicarFiltro();
 }
 
 // Faz cada coluna aceitar tarefas arrastadas
@@ -150,6 +211,20 @@ for (var i = 0; i < colunas.length; i++) {
     evento.preventDefault();
     this.classList.remove("destaque");
     moverPara(arrastando, this);
+  };
+}
+
+// Clicar numa categoria do painel filtra as tarefas
+for (var f = 0; f < filtros.length; f++) {
+  filtros[f].onclick = function () {
+    // Tira o destaque de todos os botões e coloca só no clicado
+    for (var k = 0; k < filtros.length; k++) {
+      filtros[k].classList.remove("ativo");
+    }
+
+    this.classList.add("ativo");
+    filtroAtual = this.dataset.categoria;
+    aplicarFiltro();
   };
 }
 
@@ -182,7 +257,7 @@ campo.onkeydown = function (evento) {
 // Apaga de uma vez todas as tarefas já feitas
 limpar.onclick = function () {
   concluidas.innerHTML = "";
-  atualizarContadores();
+  atualizarResumo();
   salvar();
 };
 
@@ -227,3 +302,5 @@ var salvas = JSON.parse(localStorage.getItem("hextask")) || [];
 for (var j = 0; j < salvas.length; j++) {
   criarTarefa(salvas[j].texto, salvas[j].categoria, salvas[j].coluna);
 }
+
+atualizarResumo();
